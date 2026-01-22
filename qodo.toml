@@ -1,0 +1,161 @@
+# =====================================
+# QODO CONFIGURATION — REACT PROJECT
+# =====================================
+
+[general]
+severity_threshold = "low"
+fail_on_critical = true
+auto_fix = true
+fix_strategy = "safe"  # safe | aggressive
+supported_languages = ["javascript", "typescript", "jsx", "tsx"]
+
+# =====================================
+# ANALYSIS
+# =====================================
+
+[analysis]
+detect_bugs = true
+detect_code_smells = true
+detect_security_issues = true
+detect_performance_issues = true
+detect_style_issues = true
+
+# =====================================
+# AUTO FIX SETTINGS
+# =====================================
+
+[auto_fix]
+enabled = true
+
+# Bug fixes
+fix_null_checks = true
+fix_unhandled_promises = true
+fix_unused_variables = true
+fix_dead_code = true
+fix_unreachable_code = true
+fix_type_mismatch = true
+fix_missing_keys_in_lists = true
+fix_incorrect_hook_usage = true
+fix_state_mutation = true
+
+# Code smell fixes
+fix_long_functions = true
+fix_large_components = true
+fix_deep_nesting = true
+fix_duplicate_code = true
+fix_magic_numbers = true
+fix_complex_conditions = true
+fix_inline_functions_in_render = true
+fix_redundant_props_or_state = true
+
+# Security (auto fix only safe)
+fix_insecure_eval = true
+fix_hardcoded_secrets = false  # non sicuro
+fix_dangerous_html = false     # solo warning, non automatico
+
+# =====================================
+# BUGS DETECTION
+# =====================================
+
+[bugs]
+# State & Props
+detect_invalid_props = true
+detect_direct_state_mutation = true
+detect_uninitialized_state = true
+
+# Hooks
+detect_hook_outside_component = true
+detect_missing_hook_dependencies = true
+detect_infinite_effect_loop = true
+detect_unhandled_useState_reducer = true
+
+# Events
+detect_unbound_event_handlers = true
+detect_wrong_event_arguments = true
+
+# Rendering
+detect_missing_keys = true
+detect_invalid_jsx = true
+detect_conditional_undefined_render = true
+detect_dangerous_innerHTML = true
+
+# JS / TS
+detect_null_dereference = true
+detect_unhandled_promise = true
+detect_index_out_of_bounds = true
+detect_type_mismatch = true
+
+# =====================================
+# CODE SMELLS
+# =====================================
+
+[code_smells]
+# Components
+max_component_length = 300
+max_functions_per_component = 15
+max_function_length = 40
+
+# State & Props
+max_props_per_component = 5
+detect_unused_props = true
+detect_unused_state = true
+
+# Hooks
+detect_duplicate_hooks = true
+detect_anonymous_functions_in_render = true
+detect_complex_hook_dependencies = true
+
+# JS / TS
+detect_magic_numbers = true
+detect_code_duplication = true
+detect_complex_conditions = true
+detect_deeply_nested_conditions = true
+
+# Performance / Rendering
+detect_unmemoized_values = true
+detect_redundant_rerender = true
+detect_list_without_keys = true
+
+# =====================================
+# SECURITY
+# =====================================
+
+[security]
+detect_eval_usage = true
+detect_hardcoded_secrets = true
+detect_dangerous_innerHTML = true
+detect_xss_risk = true
+detect_command_injection = true
+
+# =====================================
+# STYLE & MAINTAINABILITY
+# =====================================
+
+[maintainability]
+enforce_consistent_naming = true
+detect_long_functions = true
+detect_large_components = true
+detect_high_cyclomatic_complexity = true
+detect_too_many_parameters = true
+
+[style]
+auto_format = true
+normalize_imports = true
+remove_trailing_whitespace = true
+ensure_newline_eof = true
+
+# =====================================
+# EXCLUSIONS
+# =====================================
+
+[exclude]
+paths = [
+  "node_modules/**",
+  "dist/**",
+  "build/**",
+  ".git/**",
+  "**/*.min.*",
+  "**/*.lock",
+  "**/*.test.*",
+  "**/*.spec.*"
+]
