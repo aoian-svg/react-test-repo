@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { removeCharacterById } from "../actions";
 
@@ -29,6 +30,16 @@ const mapStateToProps = state => {
     heroes: state.heroes
   };
 };
+HeroList.propTypes = {
+  heroes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  removeCharacterById: PropTypes.func.isRequired
+};
+
 export default connect(
   mapStateToProps,
   { removeCharacterById }

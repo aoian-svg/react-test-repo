@@ -1,7 +1,7 @@
 import React from "react";
 import CharacterList from "./CharacterList";
 import HeroList from "./HeroList";
-import SquadStats from "./SqadStats";
+import SquadStats from "./SquadStats";
 import "../styles/index.css";
 
 function App() {
