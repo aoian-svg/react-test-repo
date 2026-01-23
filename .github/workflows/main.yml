@@ -1,59 +1,54 @@
-name: AI Code Quality (Bug & Smell Detection)
+name: CodeQL Analysis React
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - feature/**
-  pull_request:
-    branches:
-      - main
-      - develop
+  workflow_dispatch: # Permette di avviare manualmente con un bottone "Run workflow"
 
 jobs:
-  ai-code-analysis:
-    name: AI Bug & Code Smell Analysis
+  codeql:
+    name: Analyze React code with CodeQL
     runs-on: ubuntu-latest
 
     permissions:
+      actions: read
       contents: read
       security-events: write
-      pull-requests: write
 
     steps:
+      # 1. Checkout del codice
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
+      # 2. Setup Node.js (React è basato su Node)
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
+      # 3. Setup CodeQL
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+
+      # 4. Scarica le dipendenze (per analisi React/JS)
       - name: Install dependencies
         run: npm install
 
-      - name: Run Snyk Code AI analysis
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      # 5. Esegui l’analisi
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
         with:
-          command: code test
-          args: --severity-threshold=low --sarif-file-output=snyk.sarif --exclude=security
+          output: results.sarif
 
-      - name: Upload Snyk results to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
+      # 6. Genera report HTML scaricabile
+      - name: Convert SARIF to HTML
+        run: |
+          npm install -g sarif-html
+          sarif-html results.sarif -o codeql-report.html
+
+      # 7. Carica il report come artifact (aggiornato a v4)
+      - name: Upload CodeQL HTML report
+        uses: actions/upload-artifact@v4
         with:
-          sarif_file: snyk.sarif
-
-      - name: Convert Snyk SARIF to custom JSON
-        if: always()
-        run: |
-          node scripts/convert-sarif.js snyk.sarif snyk_custom.json
-
-      - name: Summary
-        if: always()
-        run: |
-          echo "AI code analysis completed."
-          echo "Check the Security tab, Pull Request comments, and snyk_custom.json for results."
+          name: codeql-report
+          path: codeql-report.html
