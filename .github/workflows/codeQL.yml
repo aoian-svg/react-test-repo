@@ -37,18 +37,3 @@ jobs:
       # 5. Esegui l’analisi
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        with:
-          output: results.sarif
-
-      # 6. Genera report HTML scaricabile
-      - name: Convert SARIF to HTML
-        run: |
-          npm install -g sarif-html
-          sarif-html results.sarif -o codeql-report.html
-
-      # 7. Carica il report come artifact
-      - name: Upload CodeQL HTML report
-        uses: actions/upload-artifact@v3
-        with:
-          name: codeql-report
-          path: codeql-report.html
