@@ -48,7 +48,7 @@ jobs:
 
       # 7. Carica il report come artifact
       - name: Upload CodeQL HTML report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: codeql-report
           path: codeql-report.html
