@@ -43,8 +43,8 @@ jobs:
       # 6. Genera report HTML scaricabile
       - name: Convert SARIF to HTML
         run: |
-          npm install -g sarif-html
-          sarif-html results.sarif -o codeql-report.html
+          npm install -g sarif-to-html
+          sarif-to-html results.sarif -o codeql-report.html
 
       # 7. Carica il report come artifact (aggiornato a v4)
       - name: Upload CodeQL HTML report
