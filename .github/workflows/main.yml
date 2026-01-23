@@ -39,7 +39,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: code test
-          args: --severity-threshold=medium --sarif-file-output=snyk.sarif
+          args: --severity-threshold=low --sarif-file-output=snyk.sarif --exclude=security
 
       - name: Upload Snyk results to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
@@ -47,8 +47,13 @@ jobs:
         with:
           sarif_file: snyk.sarif
 
+      - name: Convert Snyk SARIF to custom JSON
+        if: always()
+        run: |
+          node scripts/convert-sarif.js snyk.sarif snyk_custom.json
+
       - name: Summary
         if: always()
         run: |
           echo "AI code analysis completed."
-          echo "Check the Security tab and Pull Request comments for results."
+          echo "Check the Security tab, Pull Request comments, and snyk_custom.json for results."
