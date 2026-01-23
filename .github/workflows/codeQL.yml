@@ -1,0 +1,39 @@
+name: CodeQL Analysis React
+
+on:
+  workflow_dispatch: # Permette di avviare manualmente con un bottone "Run workflow"
+
+jobs:
+  codeql:
+    name: Analyze React code with CodeQL
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      # 1. Checkout del codice
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Setup Node.js (React è basato su Node)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # 3. Setup CodeQL
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+
+      # 4. Scarica le dipendenze (per analisi React/JS)
+      - name: Install dependencies
+        run: npm install
+
+      # 5. Esegui l’analisi
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
