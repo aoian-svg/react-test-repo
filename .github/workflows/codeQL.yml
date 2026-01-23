@@ -40,15 +40,9 @@ jobs:
         with:
           output: results.sarif
 
-      # 6. Genera report HTML scaricabile
-      - name: Convert SARIF to HTML
+      # 6. Mostra il report direttamente come output
+      - name: Print CodeQL SARIF results
         run: |
-          npm install -g sarif-to-html
-          sarif-to-html results.sarif -o codeql-report.html
-
-      # 7. Carica il report come artifact (aggiornato a v4)
-      - name: Upload CodeQL HTML report
-        uses: actions/upload-artifact@v4
-        with:
-          name: codeql-report
-          path: codeql-report.html
+          echo "===== CodeQL Results ====="
+          # Se vuoi leggerlo formattato, puoi usare jq
+          cat results.sarif | jq '.runs[].results[] | {ruleId: .ruleId, message: .message.text, level: .level, locations: .locations}'
