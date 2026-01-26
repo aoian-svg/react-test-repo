@@ -28,7 +28,7 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
-          queries: .github/codeql/custom-queries/
+          queries: ./.github/codeql/custom-queries/
 
       # Se vuoi, puoi aggiungere qui uno step per buildare il progetto React
       # - name: Install dependencies
