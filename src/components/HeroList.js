@@ -10,7 +10,7 @@ const HeroList = props => {
         {props.heroes.map(hero => {
           return (
             <li key={hero.id} className="list-group-item">
-              {hero.name}
+              <span dangerouslySetInnerHTML={{ __html: hero.name }} />
               <div
                 onClick={() => props.removeCharacterById(hero.id)}
                 className="d-inline float-right right-btn"
