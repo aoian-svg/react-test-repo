@@ -30,6 +30,7 @@ jobs:
           languages: ${{ matrix.language }}
           queries: |
             security-and-quality
+            .github/codeql/custom-queries/test.ql
 
       # Se vuoi, puoi aggiungere qui uno step per buildare il progetto React
       # - name: Install dependencies
