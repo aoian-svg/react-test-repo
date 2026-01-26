@@ -1,0 +1,44 @@
+name: "CodeQL Code Quality - v1"
+
+on:
+  workflow_dispatch:  # bottone "Run workflow" in GitHub UI
+
+jobs:
+  analyze:
+    name: Code Quality Analysis (JavaScript/TypeScript)
+    runs-on: ubuntu-latest
+
+    permissions:
+      security-events: write
+      contents: read
+      packages: read
+      actions: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: javascript
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL (Code Quality Focus)
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          queries: |
+            security-and-quality
+
+      # Se vuoi, puoi aggiungere qui uno step per buildare il progetto React
+      # - name: Install dependencies
+      #   run: npm install
+      #
+      # - name: Build React project
+      #   run: npm run build
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/quality/${{ matrix.language }}"
