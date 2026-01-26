@@ -1,15 +1,7 @@
 name: AI Code Quality (Bug & Smell Detection)
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - feature/**
-  pull_request:
-    branches:
-      - main
-      - develop
+  workflow_dispatch:  # permette di avviare manualmente il workflow
 
 jobs:
   ai-code-analysis:
