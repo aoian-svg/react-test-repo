@@ -159,10 +159,6 @@ async def analyze_file(file_path):
         ],
         response_format={"type": "json_object"}
     )
-
-    print(f"\n===== RESPONSE =====")
-    print(json.loads(response.choices[0].message.content))
-    print("===== FINE RESPONSE =====\n")
     
     return json.loads(response.choices[0].message.content)
 
@@ -178,8 +174,7 @@ async def main():
     if not files:
         print("DEBUG: Nessun file JavaScript/TypeScript rilevato dai comandi git diff.")
         return
-
-    print(f"DEBUG: File da analizzare: {files}")
+    
     all_issues = []
     tasks = [analyze_file(f) for f in files]
     results = await asyncio.gather(*tasks)
