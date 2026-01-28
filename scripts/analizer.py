@@ -185,7 +185,7 @@ async def main():
     results = await asyncio.gather(*tasks)
 
     print(f"\n===== RESULT =====")
-    print(result)
+    print(results)
     print("===== FINE RESULT =====\n")
 
     for res in results:
