@@ -1,3 +1,4 @@
 name: custom-queries
 version: 1.0.0
-dependencies: {}
+dependencies:
+  codeql/javascript-all: "*"
