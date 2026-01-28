@@ -182,24 +182,7 @@ async def main():
     print(f"DEBUG: File da analizzare: {files}")
     all_issues = []
     tasks = [analyze_file(f) for f in files]
-    results = await asyncio.gather(*tasks)
-
-    print(f"\n===== RESULT =====")
-    print(results)
-    print("===== FINE RESULT =====\n")
-
-    for res in results:
-        if res and "issues" in res:
-            all_issues.extend(res["issues"])
-
-    if all_issues:
-        comment = "## 🤖 AI Code Review Report\nHo trovato dei potenziali problemi nelle tue modifiche:\n\n"
-        for issue in all_issues:
-            comment += f"- **{issue['severity']}** in `{issue['file']}` (linea {issue.get('line', '?')}): {issue['message']}\n"
-            comment += f"  - **Fix consigliato:** `{issue['fix']}`\n\n"
-        post_comment(comment)
-    else:
-        post_comment("✅ Analisi completata: nessun bug o code smell rilevato nelle modifiche.")
+    print(task)
 
 if __name__ == "__main__":
     asyncio.run(main())
