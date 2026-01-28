@@ -1,4 +1,4 @@
-name: AI Code Quality Analysis
+name: OpenAI Code Quality Analysis
 
 on:
   pull_request:
