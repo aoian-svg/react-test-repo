@@ -1,19 +1,15 @@
 /**
- * @name Classi troppo lunghe
- * @description Segnala tutte le classi che hanno più di 20 righe di codice
+ * @name Funzione con troppi parametri
+ * @description Segnala le funzioni che hanno più di 3 parametri
  * @kind problem
- * @id js/long-class
+ * @id js/function-too-many-params
  */
 
 import javascript
 
-/**
- * Ritorna true se la classe supera un numero di righe
- */
-predicate isLongClass(Class c, int threshold) {
-  c.getLocation().getEndLine() - c.getLocation().getStartLine() + 1 > threshold
-}
-
-from Class c
-where isLongClass(c, 20)
-select c, "Questa classe supera le 20 righe di codice."
+from Function f
+where f.getNumberOfParameters() > 3
+select f,
+  "Questa funzione ha " +
+  f.getNumberOfParameters().toString() +
+  " parametri (massimo consigliato: 3)."
