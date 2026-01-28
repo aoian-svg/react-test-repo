@@ -179,8 +179,7 @@ async def main():
     tasks = [analyze_file(f) for f in files]
     results = await asyncio.gather(*tasks)
 
-    for i, res in results:
-        print(f"DEBUG: Risultato per {files[i]}: {json.dumps(res, indent=2)}")
+    for res in results:
         if res and "issues" in res:
             all_issues.extend(res["issues"])
 
