@@ -1,4 +1,4 @@
-name: AI Code Quality (Bug & Smell Detection)
+name: Snyk AI Code Quality
 
 on:
   workflow_dispatch:  # permette di avviare manualmente il workflow
