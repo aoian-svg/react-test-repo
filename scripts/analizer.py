@@ -182,7 +182,8 @@ async def main():
     print(f"DEBUG: File da analizzare: {files}")
     all_issues = []
     tasks = [analyze_file(f) for f in files]
-    print(tasks)
+    results = await asyncio.gather(*tasks)
+    print(results)
 
 if __name__ == "__main__":
     asyncio.run(main())
