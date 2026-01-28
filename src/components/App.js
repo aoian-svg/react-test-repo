@@ -24,4 +24,8 @@ function App() {
   );
 }
 
+function helper(a, b, c, d) {
+  return a + b + c + d;
+}
+
 export default App;
