@@ -161,7 +161,7 @@ async def analyze_file(file_path):
     )
 
     print(f"\n===== RESPONSE =====")
-    print(response)
+    print(json.loads(response.choices[0].message.content))
     print("===== FINE RESPONSE =====\n")
     
     return json.loads(response.choices[0].message.content)
@@ -182,8 +182,11 @@ async def main():
     print(f"DEBUG: File da analizzare: {files}")
     all_issues = []
     tasks = [analyze_file(f) for f in files]
-    print(tasks)
     results = await asyncio.gather(*tasks)
+
+    print(f"\n===== RESULT =====")
+    print(result)
+    print("===== FINE RESULT =====\n")
 
     for res in results:
         if res and "issues" in res:
