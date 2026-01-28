@@ -139,11 +139,6 @@ def get_file_diff(file_path):
         ['git', 'diff', 'origin/main...HEAD', '--', file_path],
         capture_output=True, text=True
     )
-    
-    print(f"\n===== DIFF per {file_path} =====")
-    print(result.stdout)
-    print("===== FINE DIFF =====\n")
-    
     return result.stdout
 
 async def analyze_file(file_path):
@@ -187,6 +182,7 @@ async def main():
     print(f"DEBUG: File da analizzare: {files}")
     all_issues = []
     tasks = [analyze_file(f) for f in files]
+    print(task)
     results = await asyncio.gather(*tasks)
 
     for res in results:
