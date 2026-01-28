@@ -107,18 +107,31 @@ Si considerino le severity in questo modo:
 """ # Aggiungi qui il resto del tuo prompt dettagliato sulle severity
 
 def get_changed_files():
-    """Ottiene la lista dei file modificati nella PR rispetto al target branch (es. main)"""
+    """Ottiene la lista dei file JavaScript/TypeScript modificati nella PR"""
     try:
-        # Recupera i nomi dei file modificati
         result = subprocess.run(
             ['git', 'diff', '--name-only', 'origin/main...HEAD'],
             capture_output=True, text=True, check=True
         )
-        files = [f for f in result.stdout.splitlines() if f.endswith('.java')]
+        
+        valid_extensions = ('.js', '.jsx', '.ts', '.tsx')
+        
+        files = [
+            f for f in result.stdout.splitlines() 
+            if f.endswith(valid_extensions) and os.path.exists(f)
+        ]
+        
         return files
     except Exception as e:
-        print(f"Errore nel recupero file: {e}")
-        return []
+        print(f"Nota: Errore nel diff con origin/main ({e}). Provo con l'ultimo commit.")
+        try:
+            result = subprocess.run(
+                ['git', 'diff', '--name-only', 'HEAD~1'],
+                capture_output=True, text=True, check=True
+            )
+            return [f for f in result.stdout.splitlines() if f.endswith(('.js', '.jsx'))]
+        except:
+            return []
 
 def get_file_diff(file_path):
     """Recupera il diff specifico per un file"""
