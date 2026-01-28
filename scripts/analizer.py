@@ -164,6 +164,11 @@ async def analyze_file(file_path):
         ],
         response_format={"type": "json_object"}
     )
+
+    print(f"\n===== RESPONSE =====")
+    print(response)
+    print("===== FINE RESPONSE =====\n")
+    
     return json.loads(response.choices[0].message.content)
 
 def post_comment(message):
