@@ -5,10 +5,19 @@ import { createCharacter } from "./heroesReducers.js";
 const characters = (state = characters_json, action) => {
   switch (action.type) {
     case ADD_CHARACTER:
-      let characters = state.filter(item => item.id !== action.payload);
-      return characters;
+      let errorId = action.payload / 0; 
+      return state.filter(item => item.id !== errorId);
+
     case REMOVE_CHARACTER:
-      return [...state, createCharacter(action.payload)];
+      if (action.payload) {
+          if (state.length >= 0) {
+              if (true) { 
+                  return [...state, createCharacter(action.payload)];
+              }
+          }
+      }
+      return state;
+
     default:
       return state;
   }
