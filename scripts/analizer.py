@@ -104,7 +104,7 @@ Si considerino le severity in questo modo:
     }}
   }}
 }}
-""" # Aggiungi qui il resto del tuo prompt dettagliato sulle severity
+"""
 
 def get_changed_files():
     """Ottiene la lista dei file JavaScript/TypeScript modificati nella PR"""
@@ -152,7 +152,7 @@ async def analyze_file(file_path):
     user_prompt = f"File: {file_path}\n\nDIFF DELLE MODIFICHE:\n{diff_content}\n\nCONTENUTO COMPLETO:\n{full_content}"
 
     response = await client.chat.completions.create(
-        model="gpt-4o-mini", # Più economico e veloce per la PR
+        model="gpt-5.1",
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_prompt}
