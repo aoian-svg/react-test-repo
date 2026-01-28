@@ -139,6 +139,11 @@ def get_file_diff(file_path):
         ['git', 'diff', 'origin/main...HEAD', '--', file_path],
         capture_output=True, text=True
     )
+    
+    print(f"\n===== DIFF per {file_path} =====")
+    print(result.stdout)
+    print("===== FINE DIFF =====\n")
+    
     return result.stdout
 
 async def analyze_file(file_path):
