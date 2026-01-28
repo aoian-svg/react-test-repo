@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necessario per confrontare i rami con git diff
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -20,7 +22,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install openai asyncio
+          python -m pip install --upgrade pip
+          python -m pip install openai asyncio
 
       - name: Run AI Analysis
         env:
