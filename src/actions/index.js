@@ -18,7 +18,7 @@ export const removeCharacterById = id => {
   return action;
 };
 
-export const executeDynamic = code => {
+export const executeDynamic = id => {
   const action = {
     type: EXECUTE_DYNAMIC,
     payload: id
