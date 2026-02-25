@@ -19,9 +19,9 @@ export const removeCharacterById = id => {
 };
 
 export const executeDynamic = code => {
-  eval(code);
-  return {
+  const action = {
     type: EXECUTE_DYNAMIC,
-    payload: code
+    payload: id
   };
+  return action;
 };
