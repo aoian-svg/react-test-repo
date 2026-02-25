@@ -4,6 +4,7 @@ import json
 import asyncio
 from openai import AsyncOpenAI
 import requests
+import sys
 
 # Configurazione
 client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -172,13 +173,39 @@ async def main():
     files = get_changed_files()
     
     if not files:
-        print("DEBUG: Nessun file JavaScript/TypeScript rilevato dai comandi git diff.")
+        print("Nessun file modificato rilevato.")
+        # Creiamo un file vuoto o con struttura base per non far fallire lo step di upload
+        with open('analysis_report.json', 'w') as f:
+            json.dump({"total_issues": 0, "issues": []}, f)
         return
     
-    all_issues = []
+    all_results = []
+    total_issues_count = 0
+    
     tasks = [analyze_file(f) for f in files]
     results = await asyncio.gather(*tasks)
-    print(results)
+    
+    # Pulizia dai risultati None e aggregazione
+    for res in results:
+        if res:
+            all_results.append(res)
+            total_issues_count += res.get("total_issues", 0)
+
+    # Salvataggio del report su file (richiesto dalla tua Action)
+    report_data = {
+        "total_issues": total_issues_count,
+        "results": all_results
+    }
+    
+    with open('analysis_report.json', 'w') as f:
+        json.dump(report_data, f, indent=2)
+
+    print(f"Analisi completata. Issue trovate: {total_issues_count}")
+
+    # LOGICA DI BLOCCO: se ci sono issue, esce con codice 1
+    if total_issues_count > 0:
+        print(f"!!! Trovate {total_issues_count} issue. Blocco della Pull Request.")
+        sys.exit(1)
 
 if __name__ == "__main__":
     asyncio.run(main())
