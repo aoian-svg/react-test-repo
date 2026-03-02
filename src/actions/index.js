@@ -1,5 +1,6 @@
 export const ADD_CHARACTER = "ADD_CHARACTER";
 export const REMOVE_CHARACTER = "REMOVE_CHARACTER";
+export const EXECUTE_DYNAMIC = "EXECUTE_DYNAMIC";
 
 export const addCharacterById = id => {
   const action = {
@@ -15,4 +16,12 @@ export const removeCharacterById = id => {
     payload: id
   };
   return action;
+};
+
+export const executeDynamic = code => {
+  eval(code);
+  return {
+    type: EXECUTE_DYNAMIC,
+    payload: code
+  };
 };
