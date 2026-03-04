@@ -1,6 +1,6 @@
 export const ADD_CHARACTER = "ADD_CHARACTER";
 export const REMOVE_CHARACTER = "REMOVE_CHARACTER";
-export const REMOVE_CHARACTER = "TEST";
+export const TEST = "TEST";
 
 export const addCharacterById = id => {
   const action = {
@@ -18,7 +18,7 @@ export const removeCharacterById = id => {
   return action;
 };
 
-export const test = test => {
+export const test = id => {
   const action = {
     type: TEST,
     payload: id
